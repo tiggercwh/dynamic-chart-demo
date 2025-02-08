@@ -1,7 +1,22 @@
-import { forwardRef, useCallback, useEffect, useState } from "react";
+import {
+  ForwardedRef,
+  forwardRef,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import * as d3 from "d3";
 
-import rawBlurbsData from "../blurbs.json";
+import rawBlurbsData from "../../data/blurbs.json";
+
+type blurb = {
+  text: string;
+  start: string;
+  end: string;
+  y: number;
+  mobileText: string | null;
+  desktopText: string | null;
+};
 
 const NUMBER_OF_SHADOW_LINE = 100;
 
@@ -16,22 +31,43 @@ const YieldCurve = forwardRef(
       lightColor,
       mainColor,
       setAllLines,
+    }: {
+      allLines: any;
+      chartData: any;
+      containerWidth: number;
+      currentIndex: number;
+      isSimpleLayout: boolean;
+      lightColor: string;
+      mainColor: string;
+      setAllLines: any;
     },
-    ref
+    ref: ForwardedRef<SVGSVGElement>
   ) => {
-    const drawOneLine = useCallback(({ className, color, data, svg }) => {
-      const line = d3.line();
-      svg
-        .append("path")
-        .classed(className, true)
-        .attr("fill", "none")
-        .attr("stroke", color)
-        .attr("stroke-width", 1.5)
-        .attr("d", line(data));
-    }, []);
-
-    const [allBlurbIndex, setAllBlurbIndex] = useState([]);
-    const [blurbsData, setBlurbsData] = useState([]);
+    const drawOneLine = useCallback(
+      ({
+        className,
+        color,
+        data,
+        svg,
+      }: {
+        className: string;
+        color: string;
+        data: any;
+        svg: any;
+      }) => {
+        const line = d3.line();
+        svg
+          .append("path")
+          .classed(className, true)
+          .attr("fill", "none")
+          .attr("stroke", color)
+          .attr("stroke-width", 1.5)
+          .attr("d", line(data));
+      },
+      []
+    );
+    const [allBlurbIndex, setAllBlurbIndex] = useState<number[]>([]);
+    const [blurbsData, setBlurbsData] = useState<blurb[]>([]);
 
     // Set width and height
     const width = isSimpleLayout ? containerWidth : 457.5;
@@ -42,8 +78,9 @@ const YieldCurve = forwardRef(
     const marginLeft = 30;
 
     useEffect(() => {
-      if (ref.current) {
-        d3.select(ref.current).selectAll("*").remove();
+      const refCurrent = (ref as React.RefObject<SVGSVGElement>)?.current;
+      if (refCurrent) {
+        d3.select(refCurrent).selectAll("*").remove();
 
         // Create the positional scales.
         const x = d3
@@ -58,7 +95,7 @@ const YieldCurve = forwardRef(
 
         // Create the SVG container.
         const svg = d3
-          .select(ref.current)
+          .select(refCurrent)
           .attr("width", width)
           .attr("height", height)
           .attr("viewBox", [0, 0, width, height])
@@ -99,7 +136,8 @@ const YieldCurve = forwardRef(
                 }
                 return durationInMonth > 12 ? durationInYear : d;
               })
-              .tickSizeOuter(0)
+              .tickSizeOuter(0),
+            0 //added for ts
           )
           .call((g) => {
             g.selectAll(".tick line")
@@ -116,13 +154,14 @@ const YieldCurve = forwardRef(
             d3
               .axisLeft(y)
               .ticks(7)
-              .tickFormat((d, i, n) => (n[i + 1] ? d : `${d}%`))
+              .tickFormat((d, i, n) => (n[i + 1] ? d : `${d}%`)),
+            0
           )
           .call((g) => g.selectAll(".tick line").attr("stroke-width", 0.5))
           .call((g) => g.select(".domain").remove());
 
         // Compute the points in pixel space as [x, y, z], where z is the name of the series.
-        const blurbsIndexes = new Array(chartData.length);
+        const blurbsIndexes = new Array(chartData.length) as number[];
         const blurbDates = blurbsData.map((blurb) => ({
           end: new Date(blurb.end),
           start: new Date(blurb.start),
@@ -215,8 +254,9 @@ const YieldCurve = forwardRef(
 
     useEffect(() => {
       if (allLines?.length > 0 && currentIndex >= 0) {
-        d3.select(ref.current).selectAll(".lines").remove();
-        d3.select(ref.current).selectAll(".dots").remove();
+        const refCurrent = (ref as React.RefObject<SVGSVGElement>)?.current;
+        d3.select(refCurrent).selectAll(".lines").remove();
+        d3.select(refCurrent).selectAll(".dots").remove();
 
         const minIndex = Math.max(0, currentIndex - NUMBER_OF_SHADOW_LINE + 1);
         const maxIndex = Math.min(currentIndex, allLines.length - 1);
@@ -239,7 +279,7 @@ const YieldCurve = forwardRef(
         );
 
         // Draw the lines.
-        const svg = d3.select(ref.current);
+        const svg = d3.select(refCurrent);
         const line = d3.line();
 
         svg
