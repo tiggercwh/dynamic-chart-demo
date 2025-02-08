@@ -1,0 +1,40 @@
+[
+  {
+    "chartNumber": 3,
+    "title": "The evolving cycle",
+    "description": "The end of an era. With the U.S. economy growing an average of 2.2% annualized since it came out of recession in June 2009 and monthly job gains averaging 220,000 over the previous 12 months, the Federal Reserve raises its interest-rate target range to 0.25%-0.50% from 0%-0.25%. A year later, it raises the target range again to 0.50%-0.75%.",
+    "highlightText": null,
+    "lightColor": "#C6E2BA",
+    "mainColor": "#520A45"
+  },
+  {
+    "chartNumber": 0,
+    "title": "The previous tightening",
+    "description": "In its most recent completed tightening cycle, which began June 30, 2004, and lasted roughly two-and-a-half years, the Fed raised rates 17 times to put the brakes on surging housing prices.",
+    "highlightText": "‘tightening cycle’,",
+    "mobileHighlightText": "‘tightening cycle’,",
+    "lightColor": "#C9E2F5",
+    "mainColor": "#0098DB",
+    "mobileDescription": "The most recent Federal Reserve ‘tightening cycle,’ the Fed raised rates 17 times in an effort to put the brakes on surging house prices."
+  },
+  {
+    "chartNumber": 1,
+    "title": "An uneven easing",
+    "description": "In the Fed's most recent ‘easing’ cycle, the central bank lowered rates to near zero, in an attempt to boost lending.",
+    "highlightText": "‘easing’ cycle,",
+    "mobileHighlightText": "‘easing cycle,’",
+    "lightColor": "#EDCADA",
+    "mainColor": "#882877",
+    "mobileDescription": "In the Fed's most recent ‘easing cycle,’ it lowered rates to near-zero to boost lending."
+  },
+  {
+    "chartNumber": 2,
+    "title": "Zero-interest-rate period",
+    "description": "Rock-bottom rates weren't enough to prop up the economy, which by 2008 had stumbled into a recession and was bleeding jobs. In this ‘zero-interest-rate period’, the Fed resorted to series of bond-buying stimulus programs aimed at restoring lending between banks and to corporations and households, and stimulating economic growth.",
+    "highlightText": "‘zero-interest-rate period’,",
+    "mobileHighlightText": "‘zero rate’ period,",
+    "lightColor": "#FEDBAE",
+    "mainColor": "#E29239",
+    "mobileDescription": "In this ’zero rate’ period, the Fed resorted to series of bond-buying stimulus programs aimed at restoring lending and stimulating growth."
+  }
+]
