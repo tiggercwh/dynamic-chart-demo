@@ -26,7 +26,7 @@ import DescriptionParagraph from "./DescriptionParagraph";
 const FedRatesChart: React.FC<{
   chartData: any[];
   description: string;
-  highlightText: string;
+  highlightText: string | null;
   isSimpleLayout: boolean;
   lightColor: string;
   mainColor: string;
@@ -45,7 +45,7 @@ const FedRatesChart: React.FC<{
   const [allLines, setAllLines] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [yieldContainerWidth, setYieldContainerWidth] = useState<number>(457.5);
-  const chartRef = useRef<HTMLDivElement>(null);
+  const chartRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const YMContainerRef = useRef<HTMLDivElement>(null);
   const isSmallLandscape = useMediaQuery(
@@ -74,7 +74,7 @@ const FedRatesChart: React.FC<{
       window.addEventListener("scroll", handleScroll);
     }
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [chartData]);
+  }, [allLines, chartData, chartRef, containerRef, setCurrentIndex]);
 
   const handleResize = () => {
     setYieldContainerWidth(YMContainerRef.current?.offsetWidth || 0);
@@ -117,7 +117,7 @@ const FedRatesChart: React.FC<{
     DOLLAR: { min: dollarIndexMin, max: dollarIndexMax },
   } = useMemo(() => findMinMax(chartData), [chartData]);
 
-  const meterWidthPercent = (currentIndex / (chartData.length - 1)) * 100;
+  const meterWidthPercentage = (currentIndex / (chartData.length - 1)) * 100;
   const ParagraphContainer = isSimpleLayout
     ? SimpleParagraphContainer
     : StandardParagraphContainer;
@@ -135,6 +135,7 @@ const FedRatesChart: React.FC<{
             <DescriptionParagraph
               description={description}
               highlightText={highlightText}
+              isMobile={isSimpleLayout} // Not neccessarily right behaviour
             />
           )}
         </ParagraphContainer>
@@ -160,7 +161,7 @@ const FedRatesChart: React.FC<{
                 currentDate={currentDate}
                 minDate={minDate}
                 maxDate={maxDate}
-                widthPercentage={meterWidthPercentage}
+                widthPercentage={meterWidthPercentage.toString()}
               />
             </MobileTimelineContainer>
           )}
@@ -200,11 +201,11 @@ const FedRatesChart: React.FC<{
             <Meter
               chartMin={-2}
               chartMax={7}
-              currentData={mortgageRate}
+              currentData={morgageRate}
               symbol="%"
               title="Fixed rate, 30-year mortgage"
-              min={mortgageRateMin}
-              max={mortgageRateMax}
+              min={morgageRateMin}
+              max={morgageRateMax}
               isPercent
               {...commonProps}
             />
@@ -215,6 +216,7 @@ const FedRatesChart: React.FC<{
               chartMin={600}
               chartMax={5000}
               currentData={standardIndex}
+              isPercent={false}
               title="S&P 500"
               min={standardIndexMin}
               max={standardIndexMax}
@@ -226,10 +228,11 @@ const FedRatesChart: React.FC<{
             <Meter
               chartMin={60}
               chartMax={100}
-              currentData={wsjDollarIndex}
+              currentData={dollarIndex}
+              isPercent={false}
               title="WSJ Dollar Index"
-              min={wsjDollarIndexMin}
-              max={wsjDollarIndexMax}
+              min={dollarIndexMin}
+              max={dollarIndexMax}
               {...commonProps}
             />
           </MeterFourContainer>

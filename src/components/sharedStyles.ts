@@ -36,13 +36,13 @@ interface GridChartContainerProps {
 }
 
 export const GridChartContainer = styled.div<GridChartContainerProps>`
-  height: 100%;
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr;
   align-items: start;
   position: sticky;
   ${({ isSimpleLayout, isSmallLandscape }) => `
-        top: ${isSimpleLayout || isSmallLandscape ? "8px" : "150px"};
+        top: ${isSimpleLayout || isSmallLandscape ? "8%" : "150px"};
     `}
   grid-template-areas:
         'heading'
@@ -173,18 +173,7 @@ export const YieldCurveContainer = styled.div<YieldCurveContainerProps>`
   height: auto;
   display: grid;
   justify-content: center;
-  grid-area: yieldAndMeter;
-  gap: ${({ isSimpleLayout }) => (isSimpleLayout ? "5px" : "30px")};
-  ${({ isSimpleLayout }) =>
-    isSimpleLayout &&
-    `
-        grid-template-areas:
-            'yield'
-            'meter1'
-            'meter2'
-            'meter3'
-            'meter4';
-    `}
+  grid-area: yield;
 `;
 
 export const YieldAndMeterContainer = styled.div<YieldCurveContainerProps>`
@@ -206,10 +195,10 @@ export const YieldAndMeterContainer = styled.div<YieldCurveContainerProps>`
                         'meter4';
                 `
                     : `
-                        'yield meter1'
-                        'yield meter2'
-                        'yield meter3'
-                        'yield meter4'
+                      'yield meter1'
+                      'yield meter2'
+                      'yield meter3'
+                      'yield meter4'
                 `
                 };
                         
@@ -231,4 +220,15 @@ export const MeterTitleDiv = styled.div<MeterTitleDivProps>`
 
 export const MeterTitleSpan = styled.span`
   margin-right: 5px;
+`;
+
+export const ChartContainer = styled.div<{
+  lightColor: string;
+  mainColor: string;
+}>`
+  height: 6000px;
+  ${({ lightColor, mainColor }) => `
+        --chart-main-color: ${mainColor};
+        --chart-light-color: ${lightColor};
+    `}
 `;

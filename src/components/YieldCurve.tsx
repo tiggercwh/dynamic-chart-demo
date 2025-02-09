@@ -7,7 +7,7 @@ import {
 } from "react";
 import * as d3 from "d3";
 
-import rawBlurbsData from "../../data/blurbs.json";
+import rawBlurbsData from "@/data/blurbs.json";
 
 type blurb = {
   text: string;
@@ -181,6 +181,8 @@ const YieldCurve = forwardRef(
             dateAsDivision,
           ]);
         });
+
+        console.log({ linesForAllPoints });
 
         const firstAndLastPoint = [
           linesForAllPoints[0],

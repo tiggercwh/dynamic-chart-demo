@@ -7,10 +7,10 @@ const DescriptionParagraph = ({
   isMobile,
 }: {
   description: string;
-  highlightText: string;
+  highlightText: string | null;
   isMobile: boolean;
 }) => {
-  const descriptionArr = description.split(highlightText);
+  const descriptionArr = description.split(highlightText || "");
   if (!highlightText || descriptionArr.length <= 1) {
     return <StyledDescription>{description}</StyledDescription>;
   }

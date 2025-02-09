@@ -17,7 +17,7 @@ type MeterProps = {
   isSmallLandscape: boolean;
   lightColor: string;
   mainColor: string;
-  symbol: string;
+  symbol?: string;
   title: string;
 };
 
