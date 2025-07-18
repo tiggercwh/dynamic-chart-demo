@@ -1,4 +1,4 @@
-### D3.js Chart demo
+# D3.js Chart Demo
 
 This is a demonstration of dynamic charts using d3.js.
 You may follow the instructions below to run locally,
