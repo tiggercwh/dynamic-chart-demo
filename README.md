@@ -13,6 +13,8 @@ npm install
 # or other equivalent package manager commands
 ```
 
+Then run it locally:
+
 ```bash
 npm run dev
 # or other equivalent package manager commands
